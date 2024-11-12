@@ -1,5 +1,5 @@
 from pathlib import Path
-from helper.preprocess_img import preprocess_image
+from preprocessing.preprocess_img import preprocess_image
 from PIL import UnidentifiedImageError
 
 
