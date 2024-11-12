@@ -1,0 +1,7 @@
+.venv/
+*png
+images/
+layoutlm-sroie/
+__pycache__/
+redundant/
+.DS_Store
