@@ -92,7 +92,7 @@ def run_inference(path, model=model, processor=processor, output_image=True):
         return extracted_info
 
 
-image = "/Users/adil/Desktop/Codes/atml_cv/large-receipt-image-dataset-SRD/1016-receipt.jpg"
+image = "/Users/adil/Desktop/Codes/atml_cv/images/large-receipt-image-dataset-SRD/img1.jpg"
 result, extracted_text = run_inference(image)
 result.save("result.png")
 result.show()

@@ -32,11 +32,20 @@ def process_receipt(uploaded_file):
             return None
             
         try:
-            # Extract information using the LayoutLM model
-            receipt_info = extract_receipt_info(temp_path)
+            # Preprocess the image using the file path
+            preprocessed_image = preprocess_image(temp_path)  # This returns a PIL Image
             
-            # Clean up the temporary file
+            # Save the preprocessed image to a new temporary file
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as tmp_file:
+                preprocessed_path = tmp_file.name
+                preprocessed_image.save(preprocessed_path, 'JPEG')
+            
+            # Extract information using the LayoutLM model with the preprocessed image path
+            receipt_info = extract_receipt_info(preprocessed_path)
+            
+            # Clean up the temporary files
             os.unlink(temp_path)
+            os.unlink(preprocessed_path)
             
             return receipt_info
             
@@ -44,6 +53,11 @@ def process_receipt(uploaded_file):
             st.error(f"Error in model inference: {str(e)}")
             # Clean up the temporary file
             os.unlink(temp_path)
+            if 'preprocessed_path' in locals():
+                try:
+                    os.unlink(preprocessed_path)
+                except:
+                    pass
             return None
             
     except Exception as e:
